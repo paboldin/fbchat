@@ -140,8 +140,9 @@ def graphql_to_message(message):
     rtn.reactions = {str(r['user']['id']):MessageReaction(r['reaction']) for r in message.get('message_reactions')}
     if message.get('blob_attachments') is not None:
         rtn.attachments = [graphql_to_attachment(attachment) for attachment in message['blob_attachments']]
-    # TODO: This is still missing parsing:
-    # message.get('extensible_attachment')
+    if message.get('extensible_attachment') is not None:
+        rtn.extensible_attachment = message.get('extensible_attachment')
+        #print(rtn.extensible_attachment)
     return rtn
 
 def graphql_to_user(user):
